@@ -1,4 +1,4 @@
-name: resource-typed-ext
+name: simply-typed-ext
 version: 0.1.0.0
 github: "finnbar/simply-typed-ext"
 license: BSD3
@@ -7,25 +7,24 @@ maintainer: "f.keating@warwick.ac.uk"
 
 extra-source-files:
 - README.md
-- src/Lexer.x
-- src/Parser.y
 
 description: Please see the README on GitHub at <https://github.com/finnbar/simply-typed-ext#readme>
 
 dependencies:
 - base >= 4.7 && < 5
+- array
+- containers
+- directory
+- mtl
 
 library:
   source-dirs: src
   build-tools:
     - alex
     - happy
-  other-modules:
-    - Lexer
-    - Parser
 
 executables:
-  rearrange-exe:
+  simply-typed-ext-exe:
     main: Main.lhs
     source-dirs: app
     ghc-options:
@@ -33,4 +32,4 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - resource-typed-ext
+      - simply-typed-ext
