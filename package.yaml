@@ -1,0 +1,35 @@
+name: simply-typed-ext
+version: 0.1.0.0
+github: "finnbar/simply-typed-ext"
+license: BSD3
+author: "Finnbar Keating and Michael Gale"
+maintainer: "f.keating@warwick.ac.uk"
+
+extra-source-files:
+- README.md
+
+description: Please see the README on GitHub at <https://github.com/finnbar/simply-typed-ext#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- array
+- containers
+- directory
+- mtl
+
+library:
+  source-dirs: src
+  build-tools:
+    - alex
+    - happy
+
+executables:
+  simply-typed-ext-exe:
+    main: Main.lhs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - simply-typed-ext
