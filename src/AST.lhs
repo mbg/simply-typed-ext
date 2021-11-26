@@ -8,6 +8,7 @@
 >   Variable,
 >   Definition(..),
 >   Expr(..),
+>   ReplDefinition(..),
 >   fvs,
 >   cas
 > ) where
@@ -26,6 +27,7 @@
 >   type Program = [Definition]
 >   type Variable = String
     
+>   type ReplDefinition = Either Definition Expr
 >   data Definition = Def String Expr 
 >                   deriving Show
     

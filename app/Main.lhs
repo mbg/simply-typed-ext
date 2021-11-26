@@ -21,7 +21,7 @@
 >   import Types
 >   import TypeInference
 >   import Interpreter
-
+    
     {----------------------------------------------------------------------}
     {-- Global Environment                                                -}
     {----------------------------------------------------------------------}
@@ -82,6 +82,9 @@
 >   parseProgram :: String -> [Definition]
 >   parseProgram = parseProg . alexScanTokens
 
+>   parseReplDefinition :: String -> ReplDefinition
+>   parseReplDefinition = parseReplDefn . alexScanTokens
+
 >   inlineInput :: String -> Env Expr
 >   inlineInput xs = do env <- get
 >                       return {-$ inline env-} $ parseInput xs
@@ -111,8 +114,6 @@
 >           Left m -> liftIO $ putStrLn m
 >           Right r -> put r
 
-    TODO: Implement defining things in repl with let.
-    Then PR this improved version after fixing the build warnings.
 
 >   run :: String -> Env ()
 >   run (':' : 'q' :       []) = return ()
@@ -146,13 +147,15 @@
 >                                   loop
 >   run (':' :             xs) = do liftIO $ putStrLn $ printf "Unknown command ':%s'" xs
 >                                   loop
->   run xs                     = do expr <- inlineInput xs
->                                   check expr $ do
->                                       env <- get
->                                       case fixM (eval env) expr of
->                                           (Left m)  -> liftIO $ putStrLn m
->                                           (Right r) -> do addDef (Def "it" r)
->                                                           liftIO $ print r
+>   run xs                     = do case parseReplDefinition xs of
+>                                       Left d@(Def var expr) -> check expr (addDef d)
+>                                       Right expr ->
+>                                          check expr $ do
+>                                               env <- get
+>                                               case fixM (eval env) expr of
+>                                                   (Left m)  -> liftIO $ putStrLn m
+>                                                   (Right r) -> do addDef (Def "it" r)
+>                                                                   liftIO $ print r
 >                                   loop
 
     The main UI loop prompts the user to enter a command and then
