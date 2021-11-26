@@ -19,7 +19,7 @@
 >   import Debug.Trace
 
 >   import Control.Applicative
->   import Control.Monad.Error hiding (fix)
+>   import Control.Monad.Except hiding (fix)
 >   import Control.Monad.State hiding (fix)
 
 >   import Types
@@ -59,7 +59,7 @@
     {-- Interpreter                                                       -}
     {----------------------------------------------------------------------}
 
->   type Interpreter = ErrorT String (State GlEnv)
+>   type Interpreter = ExceptT String (State GlEnv)
     
     {----------------------------------------------------------------------}
     {-- Evaluation                                                        -}
@@ -129,7 +129,7 @@
     {----------------------------------------------------------------------}
     
 >   eval :: GlEnv -> Expr -> Either String Expr
->   eval env e = evalState (runErrorT (eval' e)) env
+>   eval env e = evalState (runExceptT (eval' e)) env
 
 {--------------------------------------------------------------------------------------------------
                                             End of File                                            

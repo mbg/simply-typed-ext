@@ -8,7 +8,7 @@
     {----------------------------------------------------------------------}
 
 >   import Prelude hiding (pred, succ)
->   import Control.Monad.Error hiding (fix)
+>   import Control.Monad.Except hiding (fix)
 >   import Control.Monad.State hiding (fix)
 >   import Data.Function (on)
 >   import System.Environment (getArgs)
@@ -103,6 +103,9 @@
 >   compile fn = do return ()
 
     
+    TODO: Implement loading of defns from file, defining things in repl with let.
+    Then PR this improved version after fixing the build warnings.
+
 >   run :: String -> Env ()
 >   run (':' : 'q' :       []) = return ()
 >   run (':' : '?' :       xs) = showHelp >> loop
