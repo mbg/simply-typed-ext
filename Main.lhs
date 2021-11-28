@@ -8,7 +8,7 @@
     {----------------------------------------------------------------------}
 
 >   import Prelude hiding (pred, succ)
->   import Control.Monad.Error hiding (fix)
+>   import Control.Monad.Except hiding (fix)
 >   import Control.Monad.State hiding (fix)
 >   import Data.Function (on)
 >   import System.Environment (getArgs)

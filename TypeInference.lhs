@@ -14,7 +14,6 @@
     {-- Module Imports                                                    -}
     {----------------------------------------------------------------------}
 
->   import Control.Monad.Instances
 >   import Text.Printf (printf)
 >   import Types
 >   import AST
