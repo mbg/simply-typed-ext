@@ -8,7 +8,8 @@
 >   GlEnv,
 >   Env,
 >   toTyEnv,
->   eval,fix,fixM,reduceBNF
+>   eval,fix,fixM,reduceBNF,
+>   evalDef
 > ) where
 
     {----------------------------------------------------------------------}
@@ -130,6 +131,12 @@
     
 >   eval :: GlEnv -> Expr -> Either String Expr
 >   eval env e = evalState (runErrorT (eval' e)) env
+
+>   evalDef :: GlEnv -> Definition -> Either String GlEnv
+>   evalDef env (Def var e) = do
+>       ty <- infer e (toTyEnv env)
+>       let gldef = GlDef {glExpr = e, glType = ty}
+>       return $ (var, gldef) : env
 
 {--------------------------------------------------------------------------------------------------
                                             End of File                                            

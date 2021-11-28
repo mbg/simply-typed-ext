@@ -79,6 +79,9 @@
 >   parseInput :: String -> Expr
 >   parseInput = parseExpr . alexScanTokens
 
+>   parseProgram :: String -> [Definition]
+>   parseProgram = parseProg . alexScanTokens
+
 >   inlineInput :: String -> Env Expr
 >   inlineInput xs = do env <- get
 >                       return {-$ inline env-} $ parseInput xs
@@ -100,8 +103,13 @@
 >                           explain r
     
 >   compile :: String -> Env ()
->   compile fn = do return ()
-
+>   compile fname = do
+>       fn <- liftIO $ readFile fname
+>       env <- get
+>       let defns = parseProgram fn
+>       case foldM evalDef env defns of
+>           Left m -> liftIO $ putStrLn m
+>           Right r -> put r
     
 >   run :: String -> Env ()
 >   run (':' : 'q' :       []) = return ()
