@@ -1,9 +1,8 @@
 name: simply-typed-ext
 version: 0.1.0.0
-github: "finnbar/simply-typed-ext"
+github: "mbg/simply-typed-ext"
 license: BSD3
-author: "Finnbar Keating and Michael Gale"
-maintainer: "f.keating@warwick.ac.uk"
+author: "Michael Gale"
 
 extra-source-files:
 - README.md
