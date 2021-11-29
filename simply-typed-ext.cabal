@@ -6,19 +6,18 @@ cabal-version: 1.12
 
 name:           simply-typed-ext
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/finnbar/simply-typed-ext#readme>
-homepage:       https://github.com/finnbar/simply-typed-ext#readme
-bug-reports:    https://github.com/finnbar/simply-typed-ext/issues
-author:         Finnbar Keating and Michael Gale
-maintainer:     f.keating@warwick.ac.uk
-license:        BSD3
+description:    Please see the README on GitHub at <https://github.com/mbg/simply-typed-ext#readme>
+homepage:       https://github.com/mbg/simply-typed-ext#readme
+bug-reports:    https://github.com/mbg/simply-typed-ext/issues
+author:         Michael B. Gale
+maintainer:     github@michael-gale.co.uk
 build-type:     Simple
 extra-source-files:
     README.md
 
 source-repository head
   type: git
-  location: https://github.com/finnbar/simply-typed-ext
+  location: https://github.com/mbg/simply-typed-ext
 
 library
   exposed-modules:

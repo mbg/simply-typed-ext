@@ -1,14 +1,13 @@
 name: simply-typed-ext
 version: 0.1.0.0
 github: "mbg/simply-typed-ext"
-license: BSD3
-author: "Michael Gale"
+author: "Michael B. Gale"
 maintainer: "github@michael-gale.co.uk"
 
 extra-source-files:
 - README.md
 
-description: Please see the README on GitHub at <https://github.com/finnbar/simply-typed-ext#readme>
+description: Please see the README on GitHub at <https://github.com/mbg/simply-typed-ext#readme>
 
 dependencies:
 - base >= 4.7 && < 5
