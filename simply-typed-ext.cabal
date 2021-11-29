@@ -1,0 +1,60 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           simply-typed-ext
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/mbg/simply-typed-ext#readme>
+homepage:       https://github.com/mbg/simply-typed-ext#readme
+bug-reports:    https://github.com/mbg/simply-typed-ext/issues
+author:         Michael B. Gale
+maintainer:     github@michael-gale.co.uk
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/mbg/simply-typed-ext
+
+library
+  exposed-modules:
+      AST
+      Interpreter
+      Lexer
+      Parser
+      Token
+      TypeInference
+      Types
+  other-modules:
+      Paths_simply_typed_ext
+  hs-source-dirs:
+      src
+  build-tools:
+      alex
+    , happy
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , directory
+    , mtl
+  default-language: Haskell2010
+
+executable simply-typed-ext-exe
+  main-is: Main.lhs
+  other-modules:
+      Paths_simply_typed_ext
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , directory
+    , mtl
+    , simply-typed-ext
+  default-language: Haskell2010
