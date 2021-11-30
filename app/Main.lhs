@@ -110,9 +110,7 @@
 >       fn <- liftIO $ readFile fname
 >       env <- get
 >       let defns = parseProgram fn
->       case foldM evalDef env defns of
->           Left m -> liftIO $ putStrLn m
->           Right r -> put r
+>       mapM_ addDef defns
     
 >   run :: String -> Env ()
 >   run (':' : 'q' :       []) = return ()
