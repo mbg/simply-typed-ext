@@ -2,7 +2,8 @@
 module Parser (
     parseDef,
     parseProg,
-    parseExpr
+    parseExpr,
+    parseReplDefn
 ) where
 
 import Token
@@ -13,6 +14,7 @@ import AST
 %name parseDef Def
 %name parseProg Defs
 %name parseExpr Exp
+%name parseReplDefn ReplDefn
 %tokentype { Token }
 %error { parseError }
 
@@ -64,7 +66,9 @@ Type : TYPE                         { ConTy $1 }
      | '(' Type ')'                 { $2 }
 Defs : Def Defs                     { $1 : $2 }
      |                              { [] }
-     
+ReplDefn :: { ReplDefinition }
+     : Def                          { Left $1 }
+     | Exp                          { Right $1 }
 {
 parseError :: [Token] -> a
 parseError ts = error "parser error"

@@ -8,7 +8,7 @@
     {----------------------------------------------------------------------}
 
 >   import Prelude hiding (pred, succ)
->   import Control.Monad.Error hiding (fix)
+>   import Control.Monad.Except hiding (fix)
 >   import Control.Monad.State hiding (fix)
 >   import Data.Function (on)
 >   import System.Environment (getArgs)
@@ -79,6 +79,12 @@
 >   parseInput :: String -> Expr
 >   parseInput = parseExpr . alexScanTokens
 
+>   parseProgram :: String -> [Definition]
+>   parseProgram = parseProg . alexScanTokens
+
+>   parseReplDefinition :: String -> ReplDefinition
+>   parseReplDefinition = parseReplDefn . alexScanTokens
+
 >   inlineInput :: String -> Env Expr
 >   inlineInput xs = do env <- get
 >                       return {-$ inline env-} $ parseInput xs
@@ -100,8 +106,11 @@
 >                           explain r
     
 >   compile :: String -> Env ()
->   compile fn = do return ()
-
+>   compile fname = do
+>       fn <- liftIO $ readFile fname
+>       env <- get
+>       let defns = parseProgram fn
+>       mapM_ addDef defns
     
 >   run :: String -> Env ()
 >   run (':' : 'q' :       []) = return ()
@@ -135,13 +144,15 @@
 >                                   loop
 >   run (':' :             xs) = do liftIO $ putStrLn $ printf "Unknown command ':%s'" xs
 >                                   loop
->   run xs                     = do expr <- inlineInput xs
->                                   check expr $ do
->                                       env <- get
->                                       case fixM (eval env) expr of
->                                           (Left m)  -> liftIO $ putStrLn m
->                                           (Right r) -> do addDef (Def "it" r)
->                                                           liftIO $ print r
+>   run xs                     = do case parseReplDefinition xs of
+>                                       Left d@(Def var expr) -> check expr (addDef d)
+>                                       Right expr ->
+>                                          check expr $ do
+>                                               env <- get
+>                                               case fixM (eval env) expr of
+>                                                   (Left m)  -> liftIO $ putStrLn m
+>                                                   (Right r) -> do addDef (Def "it" r)
+>                                                                   liftIO $ print r
 >                                   loop
 
     The main UI loop prompts the user to enter a command and then
