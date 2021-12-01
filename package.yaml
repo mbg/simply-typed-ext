@@ -24,7 +24,7 @@ library:
 
 executables:
   simply-typed-ext-exe:
-    main: Main.lhs
+    main: Main.hs
     source-dirs: app
     ghc-options:
       - -threaded
